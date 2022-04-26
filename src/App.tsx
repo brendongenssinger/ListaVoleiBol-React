@@ -1,25 +1,40 @@
+import { Container, CssBaseline, Grid, MenuItem, MenuList, Paper } from '@mui/material';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+   BrowserRouter, 
+    Link, 
+    Route,
+  Routes  } from 'react-router-dom';
+import CadastroJogadores from './Pages/CadastroJogadores';
+import ListarPartidas from './Pages/ListarPartidas';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+              <Paper>
+                  <MenuList>
+                    <MenuItem>
+                      <Link to="CadastroJogadores">Cadastrar Jogadores</Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link to="ListarPartidas">Listar Jogos</Link>
+                    </MenuItem>
+                    <MenuItem>Logout</MenuItem>
+                  </MenuList>
+                </Paper>
+          </Grid>
+          <Grid item xs={8}>
+          
+            <Routes>
+              <Route  path="/CadastroJogadores" element={<CadastroJogadores/>}/>          
+              <Route path="/ListarPartidas" element={<ListarPartidas/>}/>
+            </Routes>
+          </Grid>
+        </Grid>
+      </BrowserRouter>
   );
 }
 
