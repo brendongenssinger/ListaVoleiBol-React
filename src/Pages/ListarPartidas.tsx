@@ -8,11 +8,12 @@ export function ListarPartidas()
     const listaContras =new Array<number>();
 
     const listaJogadores = new Array<string>();
+    //const listaJogadas = new Array<string>();
+    const jogos : number[][] = new Array();
 
     const[listaTextNomesDuplas,setListTextoNomes] = useState<Array<string>>([]);
     const[jogadoresJogando,setJogadoresJogando] = useState<number[]>([0,1,2,3]);
-    const[jogadoresDeFora,SetJogadoresDeFora] = useState<number[]>([4,5,6]);
-    const [myArray, updateMyArray] = useState<number[]>();    
+    const[jogadoresDeFora,SetJogadoresDeFora] = useState<number[]>([4,5,6]);       
     const [inicioJogadores,setInicioJogadores] = useState([1,2,3,4]);
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
@@ -98,6 +99,14 @@ function onGerarPartidas()
     setOpen(false);
 }
 
+function EncontrandoDupla(jogadorA:number,jogadorB:number)
+{
+    return jogos
+        .find(x=> (x[0]==jogadorA || x[1]==jogadorA)
+            && (x[0]==jogadorB || x[1]==jogadorB));
+}
+
+
 function ConfigurarPartidas(){
 
     listaContras.splice(0,listaContras.length); 
@@ -112,6 +121,7 @@ function ConfigurarPartidas(){
     {
     // const[jogadoresJogando,setJogadoresJogando] = useState<number[]>([0,1,2,3]);
     // const[jogadoresDeFora,SetJogadoresDeFora] = useState<number[]>([4,5,6]);
+
         var arrayJogadoresQueFicamDeFora = new Array<number>();        
         proximoJogador = jogadoresJogando[0];                
         jogadoresJogando.splice(jogadoresJogando.indexOf(proximoJogador),1);
@@ -121,6 +131,41 @@ function ConfigurarPartidas(){
         //Lista dos jogadores para jogar
         listaContras.push(...jogadoresDeFora);        
         // Terminou a partida e sairam
+      
+        
+        while(true)
+        {
+            if(EncontrandoDupla(jogadoresDeFora[0],jogadoresDeFora[1]))
+            {
+                var jogador1 = jogadoresDeFora[1];
+                var jogador2 = jogadoresDeFora[2];
+                //var jogador3 = jogadoresDeFora[3];
+
+                jogadoresDeFora.splice(1,1,jogador2);
+                jogadoresDeFora.splice(2,1,jogador1);
+            }
+
+            if(EncontrandoDupla(jogadoresDeFora[0],jogadoresDeFora[1])){
+
+                var jogador1 = jogadoresDeFora[1];
+                var jogador3 = jogadoresDeFora[3];                                
+
+                jogadoresDeFora.splice(1,1,jogador3);
+                jogadoresDeFora.splice(3,1,jogador1);
+            }
+
+            break;
+
+        }
+        
+        if(jogos.length ==8)
+        {
+            jogos.splice(0,jogos.length);
+        }
+
+        jogos.push([jogadoresDeFora[0],jogadoresDeFora[1]]);
+        jogos.push([jogadoresDeFora[2],jogadoresDeFora[3]]);
+        
         jogadoresJogando.push(...jogadoresDeFora);
         jogadoresDeFora.splice(0,jogadoresDeFora.length);        
         // Entra os jogadores que estavam de fora.
