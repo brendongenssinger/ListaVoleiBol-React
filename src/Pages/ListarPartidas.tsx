@@ -108,23 +108,13 @@ function ConfigurarPartidas(){
     jogadoresDeFora.push(...[4,5,6]);
 
     let proximoJogador = -1;
-    for (let index = 1; index < 6; index++) 
+    for (let index = 1; index < 30; index++) 
     {
     // const[jogadoresJogando,setJogadoresJogando] = useState<number[]>([0,1,2,3]);
     // const[jogadoresDeFora,SetJogadoresDeFora] = useState<number[]>([4,5,6]);
-        var arrayJogadoresQueFicamDeFora = new Array<number>();
-        if(proximoJogador < 0)
-        {
-            proximoJogador = Math.max(...jogadoresDeFora)+1;
-            if(proximoJogador==7){
-                proximoJogador=0;
-            }
-        }
-        else
-        {
-            proximoJogador +=1;
-        }
-        jogadoresJogando.splice(proximoJogador,1);        
+        var arrayJogadoresQueFicamDeFora = new Array<number>();        
+        proximoJogador = jogadoresJogando[0];                
+        jogadoresJogando.splice(jogadoresJogando.indexOf(proximoJogador),1);
         jogadoresDeFora.push(proximoJogador);
         arrayJogadoresQueFicamDeFora.push(...jogadoresJogando);        
         jogadoresJogando.splice(0,jogadoresJogando.length);
@@ -134,10 +124,8 @@ function ConfigurarPartidas(){
         jogadoresJogando.push(...jogadoresDeFora);
         jogadoresDeFora.splice(0,jogadoresDeFora.length);        
         // Entra os jogadores que estavam de fora.
-        jogadoresDeFora.push(...arrayJogadoresQueFicamDeFora);        
-
+        jogadoresDeFora.push(...arrayJogadoresQueFicamDeFora); 
     }
-
 }
 
 
